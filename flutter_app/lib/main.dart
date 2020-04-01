@@ -14,8 +14,26 @@ class MyApp extends StatefulWidget {
   //        home: MyHomePage(title: 'Home page'),
   //     );
   //  }
-   @override
   _MyAppState createState() => _MyAppState();
+}
+
+class SecondRoute extends StatelessWidget {
+   Widget build( BuildContext context) {
+      return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+            // Navigate back to first route when tapped.
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+   }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -24,6 +42,8 @@ class _MyAppState extends State<MyApp> {
  
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -47,10 +67,30 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                 )),
-            Container(
+            Container (
               margin: EdgeInsets.all(20),
-              child: Text(fullName),
-            )
+              child : Text(fullName)
+            ),
+            
+            Container (
+             child: new Column(
+              children: <Widget> [ 
+                new RaisedButton(
+                onPressed: (){
+                  // Navigator.push(
+                  //    context,
+                  //     new MaterialPageRoute(
+                  //    builder: (BuildContext context) =>
+                  //    SecondRoute()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondRoute()));
+                },
+                textColor: Colors.white,
+                color: Colors.blueAccent,
+                padding: EdgeInsets.all(8),
+                child: Text("Submit"),
+              ),
+             ]), 
+             ),
           ]))),
     );
   }
