@@ -31,10 +31,23 @@ class _MyAppState extends State<MyApp> {
   TextEditingController passwordController = TextEditingController();
   String fullName = '';
   String password = '';
+  String message = "HelloWorld";
   bool checkBoxValue = false;
 
   AlertDialog dialog = AlertDialog(
-     content : Text('Hello World', style: TextStyle( fontSize: 30 ,))
+     content : Text( "HelloWorld" , style: TextStyle( fontSize: 30 ,))
+  );
+  AlertDialog emailDialog = AlertDialog(
+     content : Text( "Email is Can't be blank." , style: TextStyle( fontSize: 30 ,))
+  );
+  AlertDialog validEmaildialog = AlertDialog(
+     content : Text( "Enter a valid Email." , style: TextStyle( fontSize: 30 ,))
+  );
+  AlertDialog passwordDialog = AlertDialog(
+     content : Text( "PassWord can't be blank." , style: TextStyle( fontSize: 30 ,))
+  );
+  AlertDialog validPassworddialog = AlertDialog(
+     content : Text( "Password should be in between 8 to 12" , style: TextStyle( fontSize: 30 ,))
   );
 
   @override
@@ -73,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                   controller: nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'User Name',
+                    labelText: 'Email',
                     
                   ),
                   onChanged: (text) {
@@ -136,12 +149,22 @@ class _MyAppState extends State<MyApp> {
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child : RaisedButton(
                 onPressed: (){
+                  if(fullName  == ""){
+                    showDialog(context: context, builder: (BuildContext context) => emailDialog);
+                  } else if ( !(RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(fullName))) {
+                    showDialog(context: context, builder: (BuildContext context) => validEmaildialog);
+                  }else if (password == "") {
+                     showDialog(context: context, builder: (BuildContext context) => passwordDialog);
+                  } else if( password.length < 9 || password.length > 13){
+                      showDialog(context: context, builder: (BuildContext context) => validPassworddialog);
+                  }else {
                   // Navigator.pushNamed(context, new_screen());
-                  Navigator.push(
-                     context,
-                      new MaterialPageRoute(
-                     builder: (BuildContext context) =>
-                     new_screen()));
+                       Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                             builder: (BuildContext context) =>
+                            new_screen()));
+                  }
                   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondRoute()));
                 },
                 textColor: Colors.white,
