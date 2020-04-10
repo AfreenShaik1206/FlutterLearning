@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import './countriesList.dart';
 import './calculator.dart';
+import './image_upload.dart';
 // GlobalKey<_StepperExample>  globalKey = GlobalKey();
 void main() => runApp(MaterialApp(
   initialRoute: '/',
@@ -11,6 +12,7 @@ void main() => runApp(MaterialApp(
     // When navigating to the "/second" route, build the SecondScreen widget.
     '/second': (context) => countriesList(),
     '/third': (context) => calculator(),
+    '/fourth': (context) => image_upload(),
   },
 ));
 
@@ -39,6 +41,46 @@ class new_screen extends StatelessWidget {
                   BottomNavigationExample(),
                   // Icon(Icons.directions_walk)
                 ],
+              ),
+              drawer:  Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                     DrawerHeader(
+                       child: Column(children: <Widget>[
+                         Container(
+                           child: Text('Drawer Header'),
+                         ),
+                         Container(
+                           alignment: Alignment.topLeft,
+                           child: Image.network(
+                     'https://github.com/nisrulz/flutter-examples/raw/develop/image_from_network/img/flutter_logo.png'),
+                         )
+                       ],) ,
+                       decoration: BoxDecoration( 
+                         color: Colors.blue,
+                       ),
+                     ),
+                     ListTile(
+                       title: Text('Item1'),
+                       onTap: () {
+                         Navigator.pop(context);
+                       } 
+                     ),
+                     ListTile(
+                       title: Text('Item2'),
+                       onTap: (){
+                         Navigator.pop(context);
+                       }
+                     ),
+                     ListTile(
+                       title: Text('Item3'),
+                       onTap: (){
+                         Navigator.pop(context);
+                       },
+                     )
+                  ],
+                ),
               ),
              floatingActionButton: FloatingActionButton(
                    onPressed: (){
@@ -353,12 +395,23 @@ class _DropdownExampleState extends State<DropDownExample> {
            ),
            Container(
              child: RaisedButton(
-                 child: Text('Show Grid View'),
+                 child: Text('Image Upload'),
                  color: Theme.of(context).primaryColor,
                  textColor: Colors.white,
                   onPressed: (){
-                     GridViewExample();
-                  }
+                    child: Text('Show Snackbar');
+                    onPressed: () {
+                          final snackBar = SnackBar(
+                          content: Text('Yay! A SnackBar!'),
+                         action: SnackBarAction(
+                            label: 'Undo',
+                       onPressed: () {
+                       },
+                       ),
+                     );
+                      Scaffold.of(context).showSnackBar(snackBar);
+                  };
+                 }
               ),
            ),
            Container(
