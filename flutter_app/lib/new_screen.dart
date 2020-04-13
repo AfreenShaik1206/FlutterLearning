@@ -320,6 +320,75 @@ class _DropdownExampleState extends State<DropDownExample> {
     DateTime dateAndTime;
     Widget build(BuildContext context) {
       return Center( child: Column(children: <Widget>[
+        Container(
+           height:  40,
+        ),
+           Container(
+              height: 150,
+              child: PageView(
+                controller: PageController(
+                   viewportFraction: 0.8,
+                ),
+                scrollDirection: Axis.horizontal,
+                pageSnapping: true,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    color: Colors.redAccent,
+                    width: 100,
+                    child: Column(
+                       children: <Widget>[
+                         Container(
+                           margin: EdgeInsets.fromLTRB(10, 10, 5, 0),
+                           alignment: Alignment.topLeft,
+                           child: Text('Main Activity', style:TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white))
+                         ),
+                         Container(
+                           margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
+                           child: Text('This is the Main Activity. For a more detailed help message, Press h.To detch, press d;to quit q. ', style:TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal))
+                         )
+                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    color: Colors.blueAccent,
+                    width: 100,
+                    child: Column(
+                       children: <Widget>[
+                         Container(
+                           margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                           alignment: Alignment.topLeft,
+                           child: Text('Main Activity', style:TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white))
+                         ),
+                         Container(
+                           margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
+                           child: Text('This is the Main Activity. For a more detailed help message, Press h.To detch, press d;to quit q. ', style:TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal))
+                         )
+                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    color: Colors.greenAccent,
+                    width: 100,
+                    child: Column(
+                       children: <Widget>[
+                         Container(
+                           margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+                           alignment: Alignment.topLeft,
+                           child: Text('Main Activity', style:TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white))
+                         ),
+                         Container(
+                           margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
+                           child: Text('This is the Main Activity. For a more detailed help message, Press h.To detch, press d;to quit q. ', style:TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal))
+                         )
+                       ],
+                    ),
+                  )
+                ],
+              ),
+           ),
            Container(
              margin: EdgeInsets.all(20),
              child: DropdownButton(
@@ -399,18 +468,11 @@ class _DropdownExampleState extends State<DropDownExample> {
                  color: Theme.of(context).primaryColor,
                  textColor: Colors.white,
                   onPressed: (){
-                    child: Text('Show Snackbar');
-                    onPressed: () {
-                          final snackBar = SnackBar(
-                          content: Text('Yay! A SnackBar!'),
-                         action: SnackBarAction(
-                            label: 'Undo',
-                       onPressed: () {
-                       },
-                       ),
-                     );
-                      Scaffold.of(context).showSnackBar(snackBar);
-                  };
+                          Navigator.push(
+                              context,
+                             new MaterialPageRoute(
+                             builder: (BuildContext context) =>
+                           image_upload()));
                  }
               ),
            ),
