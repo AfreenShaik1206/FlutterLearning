@@ -16,7 +16,7 @@ void main() => runApp(MaterialApp(
   },
 ));
 
-class new_screen extends StatelessWidget {
+class new_screen extends StatelessWidget {    
    // This widget is the root of your application.
    Widget build(BuildContext context) {
      
@@ -237,14 +237,19 @@ class StepperExample extends StatefulWidget {
 
 class _StepperExample extends State<StepperExample> {
    int current_Step = 0;
-
+   int selectedRadio = 0;
+   int selctedRadioListTile = 0;
     AlertDialog dialog = AlertDialog(
        content: Text('No Trains Available', style: TextStyle(fontSize: 30, color: Colors.black)),
      );
    void dialogShow() {
      showDialog(context: context, builder: (BuildContext context) => dialog);
    }
-
+   setSelectedValue(int val) {
+     setState(() {
+       selectedRadio = val;
+     });
+   }
    List<Step> my_steps = [
      Step(
          title: Text('First'), 
@@ -276,7 +281,10 @@ class _StepperExample extends State<StepperExample> {
          Container(
            margin: EdgeInsets.all(10),
            color: Colors.white,
-           child: Stepper(
+           child : Column(
+             children: <Widget>[
+               Container(
+                  child: Stepper(
              currentStep: this.current_Step,
              steps: my_steps,
              type: StepperType.vertical,
@@ -302,6 +310,36 @@ class _StepperExample extends State<StepperExample> {
                });
              },
             ),
+               ),
+               Container(
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: <Widget>[
+                     RadioListTile(
+                       value: 1,
+                       groupValue: selectedRadio,
+                       activeColor: Colors.blue,
+                       title: Text('Radio1',style: TextStyle(color: Colors.black),),
+                       selected: false,
+                       onChanged: (val) {
+                         setSelectedValue(val);
+                       },
+                     ),
+                     RadioListTile(
+                       value: 2,
+                       groupValue: selectedRadio,
+                       activeColor: Colors.blue,
+                       title: Text('Radio2', style: TextStyle(color: Colors.black)),
+                       selected: false,
+                       onChanged: (val) {
+                         setSelectedValue(val);
+                       },
+                     ),
+                   ],
+                 ) ,
+               )
+             ],
+           ) 
          )
        ],)
      );

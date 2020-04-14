@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+// import './message.dart';
+import 'package:flutter_local_notifications/src/platform_specifics/android/message.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:async';
 
 void main() => runApp(countriesList());
 
@@ -15,14 +19,21 @@ class countriesList extends StatelessWidget {
   }
 }
 
-class BodyLayout extends StatelessWidget{
+class BodyLayout extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return _myListView(context);
+  _notification createState() {
+    return _notification();
   }
+  // Widget build(BuildContext context) {
+  //     return _myListView(context);
+  //   }
 }
 
-Widget _myListView(BuildContext context) {
+class _notification extends State<BodyLayout> {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    final List<Message> messages = []; 
+    Widget build(BuildContext context) {
      final europeanCountries = ['Albania', 'Andorra', 'Armenia', 'Austria', 
         'Azerbaijan', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria',
         'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland',
@@ -41,3 +52,54 @@ Widget _myListView(BuildContext context) {
         },
       );
 }
+   
+    void initState() {    
+       super.initState();
+       var android = new AndroidInitializationSettings('mipmap/ic_launcher');
+       var ios = new IOSInitializationSettings();
+       var platform = new InitializationSettings(android, ios);
+       flutterLocalNotificationsPlugin.initialize(platform);
+
+       _firebaseMessaging.configure(
+          onMessage: (Map<String, dynamic> message) async {
+             print("OnMessage: $message");
+             final notification = message['notification'];
+              showNotification(message);
+            //  setState(() {
+            //    messages.add(Message(
+            //      title: notification["title"],
+            //      body:  notification["body"]
+            //     ));
+            //  });
+          },
+          onLaunch:  (Map<String, dynamic> message) async {
+            print("OnLaunch: $message");
+          },
+          onResume:  (Map<String, dynamic> message) async {
+            print("OnResume: $message");
+          }
+       );
+       _firebaseMessaging.requestNotificationPermissions(
+          const IosNotificationSettings(sound: true, badge: true, alert: true)
+       );
+    }
+
+    showNotification(Map<String, dynamic> message)  async{
+       var android = new AndroidNotificationDetails('channel_id',"channel_name",
+       "channelDescription");
+       var ios = new IOSNotificationDetails();
+       var platform = new NotificationDetails(android, ios);
+       await flutterLocalNotificationsPlugin.show(0, "Flutter_app", "message" , platform);
+    }
+    // Widget build(BuildContext context)=> ListView (
+    //   children: messages.map(buildMessage).toList(),
+    // );
+
+    // Widget buildMessage(Message message) => ListTile(
+    //   title:  Text(message.title),
+    //   subtitle: Text(message.body),
+    
+    // );
+      
+}
+
