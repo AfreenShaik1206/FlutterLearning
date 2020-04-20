@@ -30,10 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
    void initState() {
 
      super.initState();
+     
      Timer(Duration(seconds: 5), () => 
-         Navigator.push(context, new MaterialPageRoute(
-           builder: (BuildContext context) => first_screen()
-         ))
+        Navigator.push(
+          context,
+          new MaterialPageRoute(builder: (BuildContext context) => firsrt_screen())
+        )
      );
    }
 
@@ -65,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                            Icons.shopping_cart,
                            color: Colors.greenAccent,
                            size: 50.0
+
                          ),
                        ),
                        Padding(padding: EdgeInsets.only(top: 10.0)),

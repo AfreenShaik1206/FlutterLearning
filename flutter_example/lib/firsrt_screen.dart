@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:math';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import './itemList.dart';
 
-void main() => runApp(first_screen());
+void main() => runApp(MaterialApp(
+  initialRoute: '/',
+  routes: {
+    // When navigating to the "/" route, build the FirstScreen widget.
+    '/': (BuildContext context) => firsrt_screen(),
+    // When navigating to the "/second" route, build the SecondScreen widget.
+    '/second': (BuildContext context) => itemList(),
+  },
+));
 
-class first_screen extends StatelessWidget {
+class firsrt_screen extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -29,13 +45,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-
+  Future<void> _shareImage() async {
+    try {
+      final ByteData bytes = await rootBundle.load('images/arrivals.jpg');
+      await Share.file(
+        'esys image', 'esys.png', bytes.buffer.asUint8List(), 'image/png', text: 'Buy these Produts and win exciting gifts');
+      } catch(e) {
+        print('error: $e');
+      }
+  }
   @override
   Widget build(BuildContext context) {
     
     final _controller = new PageController();
     const duration = const Duration(milliseconds: 300);
-    
+  
+    // Future<void> share() async {
+    //    await FlutterShare.share(
+    //             linkUrl: 'https://futter.dev/'
+    //     );
+    // }
     final List<Widget> _pages = <Widget>[
          Image(image: AssetImage('images/kidsWear.jpg'),fit: BoxFit.contain),
          Image(image: AssetImage('images/summerSuit.jpg'),fit: BoxFit.contain),
@@ -64,14 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.share), 
-            onPressed: () {
-
-            }
+            onPressed: () async =>  await _shareImage()
           ),
           IconButton(
             icon: Icon(Icons.mail), 
             onPressed: () {
-
+            
             }
           ),
           IconButton(
@@ -142,11 +169,66 @@ class _MyHomePageState extends State<MyHomePage> {
                ],)
       )
       ),
+      Material(
+        child: InkWell(
+           onTap: () {
+             Navigator.push(context, 
+              new MaterialPageRoute(builder: (BuildContext context) => new itemList(value: 'ListPage'))
+             );
+           },
+           child: Container(
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              height: 150.0,
+              child: Image(image: AssetImage('images/home-page-banner-m.jpg'), fit: BoxFit.fill),
+           )
+        )
+        
+        
+      ),
       Container(
-        padding: EdgeInsets.all(10),
-        height: 100.0,
-        child: Image(image: AssetImage('images/home-page-banner-m.jpg')),
-      )],),
+        color: Colors.deepPurpleAccent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          Container(height: 30, 
+            margin: EdgeInsets.only(top:10, bottom: 10),
+            child: Text('Categories',textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0,  color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ],)
+      ),
+      
+      // Container(
+      //   child: GridView.builder(
+      //     itemCount: _pages.length
+      //     gridDelegate: SilverGridDelegateWithFixedCrossAxisCount(crossAxisC), 
+      //     itemBuilder: null
+      //   ),
+      // )
+      
+      // CustomScrollView(
+      //   slivers: <Widget>[
+      //     SliverPadding(
+      //        padding: EdgeInsets.all(20),
+      //        sliver: SliverGrid.count(
+      //          crossAxisCount: 2,
+      //          crossAxisSpacing: 5,
+      //          mainAxisSpacing: 5,
+      //          children: <Widget>[
+      //            Container(
+      //              padding: EdgeInsets.all(20),
+      //              child: Image(image: AssetImage('images/arrivals.jpg'),fit: BoxFit.fill)
+      //            ),
+      //             Container(
+      //              padding: EdgeInsets.all(20),
+      //              child: Image(image: AssetImage('images/arrivals.jpg'),fit: BoxFit.fill)
+      //            ),
+      //          ],
+      //        ),
+      //     )
+      //   ],
+      // )
+      ],),
+    
       
  // This trailing comma makes auto-formatting nicer for build methods.
     );

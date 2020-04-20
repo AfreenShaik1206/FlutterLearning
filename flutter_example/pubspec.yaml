@@ -24,7 +24,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   smooth_page_indicator: ^0.1.5
-  
+  esys_flutter_share: ^1.0.2
+  multilevel_drawer: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,22 @@ flutter:
    - images/summerSuit.jpg
    - images/kidsWear.jpg
    - images/home-page-banner-m.jpg
+   - images/image1.jpg
+   - images/image2.jpg
+   - images/image3.jpg
+   - images/image4.jpg
+   - images/image5.jpg
+   - images/image6.jpg
+   - images/image7.jpg
+   - images/image8.jpg
+   - images/image9.jpg
+   - images/image10.jpg
+   - images/image11.jpg
+   - images/image12.jpg
+   - images/image13.jpg
+   - images/image14.jpg
+   - images/image15.jpg
+   - images/image16.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
