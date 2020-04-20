@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import './itemList.dart';
+import 'package:multilevel_drawer/multilevel_drawer.dart';
 
 void main() => runApp(MaterialApp(
   initialRoute: '/',
@@ -109,14 +110,59 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ]
       ),
-      drawer: Drawer(
-        child: ListView(children: <Widget>[
-          DrawerHeader(
+      drawer: MultiLevelDrawer(
+        subMenuBackgroundColor: Colors.white,
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight,
+                  colors: [
+                    Colors.cyan,Colors.pink
+                  ]),
+        divisionColor: Colors.white,
+        header: Container(
+          height: MediaQuery.of(context).size.height * 0.25,
+          margin: EdgeInsets.only(top: 15),
+          child: Center(
             child: Column(
-
-            )
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: AssetImage('images/image15.jpg'),
+                  backgroundColor: Colors.grey[500],
+                  radius: 50,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text('Afreen shaik')
+              ],
+            ),
+          ),
+        ), 
+        children: [
+          MLMenuItem(
+            leading: Icon(Icons.person),
+            trailing: Icon(Icons.arrow_right),
+            subMenuItems: [
+              MLSubmenu(submenuContent: Text('Option 1'), onClick: (){}),
+              MLSubmenu(submenuContent: Text('Option 2'), onClick: (){}),
+              MLSubmenu(submenuContent: Text('Option 3'), onClick: (){})
+            ],
+            content: Text('My Profile'), onClick: (){}
+          ),
+          MLMenuItem(
+            leading: Icon(Icons.settings),
+            trailing: Icon(Icons.arrow_right),
+            subMenuItems: [
+              MLSubmenu(submenuContent: Text('Option 1'), onClick: (){}),
+              MLSubmenu(submenuContent: Text('Option 2'), onClick: (){}),
+            ],
+            content: Text('Settings'), onClick: (){}
+          ),
+          MLMenuItem(
+            leading: Icon(Icons.notifications_active),
+            content: Text('Notifications'), onClick: (){}
           )
-        ],),
+          
+        ]
       ),
       body: ListView(
         padding: EdgeInsets.zero,
